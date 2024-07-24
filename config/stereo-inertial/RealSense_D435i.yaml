@@ -40,11 +40,11 @@ Tlr: !!opencv-matrix
 
 
 # Camera resolution
-Camera.width: 640
+Camera.width: 848
 Camera.height: 480
 
 # Camera frames per second 
-Camera.fps: 30.0
+Camera.fps: 5.0
 
 # Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
 Camera.RGB: 1
@@ -62,8 +62,8 @@ Tbc: !!opencv-matrix
    rows: 4
    cols: 4
    dt: f
-   data: [1,0,0,-0.005,
-         0,1,0,-0.005,
+   data: [0,1,0,-0.025,
+         -1,0,0,-0.18,
          0,0,1,0.0117,
          0.0, 0.0, 0.0, 1.0]
 
@@ -75,13 +75,13 @@ IMU.NoiseGyro: 1e-3 # 2.44e-4 #1e-3 # rad/s^0.5
 IMU.NoiseAcc: 1e-2 # 1.47e-3 #1e-2 # m/s^1.5
 IMU.GyroWalk: 1e-6 # rad/s^1.5
 IMU.AccWalk: 1e-4 # m/s^2.5
-IMU.Frequency: 200
+IMU.Frequency: 100
 
 #--------------------------------------------------------------------------------------------
 # ORB Parameters
 #--------------------------------------------------------------------------------------------
 # ORB Extractor: Number of features per image
-ORBextractor.nFeatures: 1250
+ORBextractor.nFeatures: 1200
 
 # ORB Extractor: Scale factor between levels in the scale pyramid 	
 ORBextractor.scaleFactor: 1.2

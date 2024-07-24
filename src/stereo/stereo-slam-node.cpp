@@ -48,8 +48,8 @@ StereoSlamNode::StereoSlamNode(ORB_SLAM3::System* pSLAM, const string &strSettin
         cv::initUndistortRectifyMap(K_r,D_r,R_r,P_r.rowRange(0,3).colRange(0,3),cv::Size(cols_r,rows_r),CV_32F,M1r,M2r);
     }
 
-    left_sub = std::make_shared<message_filters::Subscriber<ImageMsg> >(shared_ptr<rclcpp::Node>(this), "camera/left");
-    right_sub = std::make_shared<message_filters::Subscriber<ImageMsg> >(shared_ptr<rclcpp::Node>(this), "camera/right");
+    left_sub = std::make_shared<message_filters::Subscriber<ImageMsg> >(shared_ptr<rclcpp::Node>(this), "camera_front");
+    right_sub = std::make_shared<message_filters::Subscriber<ImageMsg> >(shared_ptr<rclcpp::Node>(this), "camera_side");
 
     syncApproximate = std::make_shared<message_filters::Synchronizer<approximate_sync_policy> >(approximate_sync_policy(10), *left_sub, *right_sub);
     syncApproximate->registerCallback(&StereoSlamNode::GrabStereo, this);
@@ -96,6 +96,10 @@ void StereoSlamNode::GrabStereo(const ImageMsg::SharedPtr msgLeft, const ImageMs
     }
     else
     {
+        // RCLCPP_ERROR(this->get_logger(), "Stereo rectification is not enabled. Please enable it in the launch file.");
+        // RCLCPP_INFO(this->get_logger(), "right and left size: %d, %d", cv_ptrRight->image.size().width, cv_ptrLeft->image.size().width);
+        //print path to where m_SLAM->TrackStereo is defined
+        // RCLCPP_INFO(this->get_logger(), "Path to m_SLAM->TrackStereo: %s", __FILE__);
         m_SLAM->TrackStereo(cv_ptrLeft->image, cv_ptrRight->image, Utility::StampToSec(msgLeft->header.stamp));
     }
 }
